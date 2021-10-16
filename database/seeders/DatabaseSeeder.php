@@ -1,7 +1,7 @@
 <?php
 
 namespace Database\Seeders;
-use App\Models\Game;
+use App\Models\User;
 use Database\Factories\GameFactory;
 use Illuminate\Database\Seeder;
 
@@ -15,7 +15,8 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
-        Game::factory(10)->create();
+        // Game::factory(15)->create();
+        User::factory(25)->create();
 
     }
 }
