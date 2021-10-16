@@ -15,10 +15,10 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id('user_id');
-            $table->string('game_id');
+            $table->string('game_id_fk');
             $table->string('user_name');
             $table->integer('highest_score');
-            $table->foreign('game_id')->references('game_id')->on('games');
+            $table->foreign('game_id_fk')->references('game_id')->on('games');
             $table->timestamps();
         });
     }

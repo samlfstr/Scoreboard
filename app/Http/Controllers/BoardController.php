@@ -10,11 +10,8 @@ use App\Models\UserScore;
 class BoardController extends Controller
 {
     function index(){
-        $user = [
-            ['user_id' => '0'],
-            ['user_name' => 'Samuel'],
-            ['highest_score' => '60']
-        ];
+
+        $user = User::game_ids(10);
 
         return view('scoreboard')->with('users', $user);
     }

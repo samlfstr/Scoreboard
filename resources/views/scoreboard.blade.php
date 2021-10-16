@@ -10,13 +10,8 @@
 <body>
 
 @foreach ($users as $item)
-    @foreach ($item as $key => $value)
-        <p>{{$key}}</p>
-    @endforeach
+    <p>{{$item->user_name}}</p>
 @endforeach
-
-
-
 
 
 
