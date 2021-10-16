@@ -9,7 +9,7 @@
 </head>
 <body>
 
-@foreach ($user as $item)
+@foreach ($users as $item)
     @foreach ($item as $key => $value)
         <p>{{$key}}</p>
     @endforeach

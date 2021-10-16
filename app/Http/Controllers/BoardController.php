@@ -16,7 +16,7 @@ class BoardController extends Controller
             ['highest_score' => '60']
         ];
 
-        return view('scoreboard')->with('user', $user);
+        return view('scoreboard')->with('users', $user);
     }
 
 
