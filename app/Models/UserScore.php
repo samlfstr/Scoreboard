@@ -5,6 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property mixed user_id_fk
+ * @property mixed game_id_fk
+ * @property mixed score
+ * @property mixed user_rank
+ */
 class UserScore extends Model
 {
     protected $table = "user_scores";
@@ -30,10 +36,29 @@ class UserScore extends Model
         return UserScore::query()
             ->select('user_id_fk', 'game_id_fk', 'score')
             ->where('game_id_fk', '=', $game_id)
-            ->orderBy('score', 'asc')
+            ->orderBy('score', 'desc')
             ->limit(25)
             ->get();
     }
+
+    static function get_user_rank($user_id, $game_id)
+    {
+        return UserScore::query()
+            ->select('user_rank')
+            ->where('user_id_fk', '=', $user_id)
+            ->where('game_id_fk', '=', $game_id)
+            ->get();
+    }
+
+    static function update_rank($user_id, $game_id, $rank)
+    {
+        return UserScore::query()
+                ->where('user_id_fk','=', $user_id)
+                ->where('game_id_fk', '=', $game_id)
+                ->update(['user_rank' => $rank]);
+    }
+
+
 
 
 }

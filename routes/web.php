@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BoardController;
+use App\Models\UserScore;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,5 +20,6 @@ Route::get('/', function () {
 });
 
 Route::get('/scoreboard/games', [BoardController::class, 'get_games']);
-Route::get('/scoreboard/add', [BoardController::class, 'add_score']);
-Route::get('/scoreboard/{game_id}', [BoardController::class, 'get_scoreboard']);
+Route::pattern('game_id', '[0-9]+');
+Route::get('/scoreboard/games/{game_id}', [BoardController::class, 'get_scoreboard']);
+Route::put('/scoreboard/add', [BoardController::class, 'add_score']);
