@@ -57,8 +57,4 @@ class UserScore extends Model
                 ->where('game_id_fk', '=', $game_id)
                 ->update(['user_rank' => $rank]);
     }
-
-
-
-
 }

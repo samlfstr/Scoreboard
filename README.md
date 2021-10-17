@@ -1,64 +1,249 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Laravel ScoreBoard Api
+`Version 0.1`
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+The project has been build using Laravel 8x framework.
+ScoreBoard api allows you to retrieve information about a multiplatform game.
+It has a 3 main function, and those can be easily accessed using routes.
+In this project I used postman as an API tester.
 
-## About Laravel
+## Table of Contents
+* ###[Prerequisites](#Prerequisites)
+* ###[Installation](#Installation)
+* ###[Structure](#Structure)
+* ###[Tools For Testing](#Tools)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Prerequisites
+<a name="prerequisites"></a>
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+You need local server (MAMP, WAMP, etc.) to run apache and mysql.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+You need a PHP IDE, which I am currently using is [Php Storm](https://www.jetbrains.com/fr-fr/phpstorm/). on MAC.
 
-## Learning Laravel
+## Installation
+<a name="Installation"></a>
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Then install [composer](https://getcomposer.org/).
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Install `Laravel Framework` using console, before go to the directory you wanna install you project :
+```
+composer create-project laravel/laravel <project_name>
+```
 
-## Laravel Sponsors
+Make sure that the .env file is set up : `app key & database credentials`
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## Structure
+<a name="Structure"></a>
 
-### Premium Partners
+> * **Migrations**
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[CMS Max](https://www.cmsmax.com/)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
 
-## Contributing
+<details>
+<summary>Migrations allow you to create tables in the database.</summary>
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Users Table
+```
+ Schema::create('users', function (Blueprint $table) {
+   $table->id('user_id');
+   $table->string('game_id_fk');
+   $table->string('user_name');
+   $table->integer('highest_score');
+   $table->foreign('game_id_fk')->references('game_id')->on('games');
+   $table->timestamps();
+ });
+```
 
-## Code of Conduct
+Games Table
+```
+ Schema::create('games', function (Blueprint $table) {
+   $table->id('game_id');
+   $table->string('game_title');
+   $table->timestamps();
+ });
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Scores Table
+```
+ Schema::create('user_scores', function (Blueprint $table) {
+   $table->id('score_id');
+   $table->integer('score');
+   $table->string('user_id_fk');
+   $table->integer('game_id_fk');
+   $table->foreign('user_id_fk')->references('user_id')->on('users');
+   $table->foreign('game_id_fk')->references('game_id')->on('games');
+   $table->timestamps();
+ });
+```
 
-## Security Vulnerabilities
+</details>
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-## License
+> * **Factories**
+<details>
+<summary>You can seed data into your tables easily with factories using faker.</summary>
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+UserFactory
+```
+ public function definition() : array
+ {
+     return [
+         'game_id_fk' => $this->faker->numberBetween(1, 25),
+         'user_name' => $this->faker->name(),
+         'highest_score' => $this->faker->numberBetween(1,500)
+     ];
+ }
+```
+
+GameFactory
+```
+ public function definition(): array
+ {
+     return ['game_title'=>$this->faker->name()];
+ }
+```
+
+UserScoreFactory
+```
+ public function definition() : array
+ {
+     return [
+         'score' => $this->faker->numberBetween(1, 1000),
+         'user_id_fk' => $this->faker->numberBetween(1, 100),
+         'game_id_fk' => $this->faker->numberBetween(1,25)
+     ];
+ }
+```
+
+Then use DatabaseSeeder to run all factories
+
+```
+ public function run()
+ {
+     Game::factory(25)->create();
+     User::factory(25)->create();
+     UserScore::factory(50)->create();
+ }
+```
+
+</details>
+
+> * **Models**
+<details>
+<summary>They allow you to interreact with database.</summary>
+
+User Model
+```
+class User extends Model
+{
+    // Define the database to use
+    protected $table = "users";
+    use HasFactory;
+
+    // Return all users as obj
+    static function users(){
+       return User::all();
+    }
+
+    /* select count(*) as count from users where game_id_fk = 10;*/
+    static function u_users($game_id): int
+    {
+        return User::query()
+            ->select('game_id_fk')
+            ->where('game_id_fk', '=', $game_id)
+            ->count();
+    }
+}
+```
+
+Game Model
+```
+class Game extends Model
+{
+    // Define the database to use
+    protected $table = "games";
+    use HasFactory;
+
+    static function the_active_games(){
+        return Game::all();
+    }
+}
+```
+
+UserScore Model
+```
+class UserScore extends Model
+{   
+    // Define the database to use
+    protected $table = "user_scores";
+    use HasFactory;
+
+    static function scores(): array
+    {
+        return UserScore::all();
+    }
+
+    // Return the count of unique players by game id
+    /*select count(*) as total_play_count from user_scores where game_id_fk = 21;*/
+    static function total_play_count($game_id): int
+    {
+        return UserScore::query()
+            ->select('game_id_fk')
+            ->where('game_id_fk', '=', $game_id)
+            ->count();
+    }
+
+    // That function returns only 25 scores and unique user scores for a given game id
+    /*select game_id_fk,user_id_fk, score from user_scores where game_id_fk = 25 order by score asc;*/
+    static function get_scores($game_id)
+    {
+        return UserScore::query()
+            ->select('user_id_fk', 'game_id_fk', 'score')
+            ->where('game_id_fk', '=', $game_id)
+            ->orderBy('score', 'desc')
+            ->limit(25)
+            ->get();
+    }
+
+    // Get only user rank
+    static function get_user_rank($user_id, $game_id)
+    {
+        return UserScore::query()
+            ->select('user_rank')
+            ->where('user_id_fk', '=', $user_id)
+            ->where('game_id_fk', '=', $game_id)
+            ->get();
+    }
+
+    // Update the rank
+    static function update_rank($user_id, $game_id, $rank)
+    {
+        return UserScore::query()
+                ->where('user_id_fk','=', $user_id)
+                ->where('game_id_fk', '=', $game_id)
+                ->update(['user_rank' => $rank]);
+    }
+}
+
+```
+</details>
+
+> * **Routing**
+<details>
+<summary>It is a very stong tool that allows you to create intelligent routes.</summary>
+
+```
+Route::get('/scoreboard/games', [BoardController::class, 'get_games']);
+Route::pattern('game_id', '[0-9]+');
+Route::get('/scoreboard/games/{game_id}', [BoardController::class, 'get_scoreboard']);
+Route::put('/scoreboard/add', [BoardController::class, 'add_score']);
+
+```
+
+</details>
+
+## Tools For Testing
+<a name="Tools"></a>
+
+Postman is a very useful tool that allows us sending postdata through localhost :
+In order to make it work, we need to use the put mehtod.
+
+<img width="1436" alt="Screenshot 2021-10-18 at 01 51 40" src="https://user-images.githubusercontent.com/28195113/137647907-9eb61bc0-beac-45aa-b373-de8398d77d2e.png">

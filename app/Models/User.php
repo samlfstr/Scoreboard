@@ -22,7 +22,5 @@ class User extends Model
             ->where('game_id_fk', '=', $game_id)
             ->count();
     }
-
-
 }
 

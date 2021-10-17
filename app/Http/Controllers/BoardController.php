@@ -8,13 +8,6 @@ use App\Models\Game;
 use App\Models\UserScore;
 use Illuminate\Support\Facades\DB;
 
-/*
-[add_score]
-Bir oyuncu oyunu bitirdiğinde kullanılacak metod.
-(In: {game_id: ,user_id: , score: }
-(Out: [{old_rank: “Önceki Sıralama”, new_rank: “Şimdiki Sıralama”, sweep: [1,2,3,4,5] (Bu oyunla sıralamada geçtiği kullanıcılar*)}
-*/
-
 class BoardController extends Controller
 {
     function updateRank($game_id): array
