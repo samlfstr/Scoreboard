@@ -247,3 +247,14 @@ Postman is a very useful tool that allows us sending postdata through localhost 
 In order to make it work, we need to use the put mehtod.
 
 <img width="1436" alt="Screenshot 2021-10-18 at 01 51 40" src="https://user-images.githubusercontent.com/28195113/137647907-9eb61bc0-beac-45aa-b373-de8398d77d2e.png">
+
+
+## How to use the API
+
+http://127.0.0.1:8000/scoreboard/games returns the get_games function
+http://127.0.0.1:8000/scoreboard/games/{game_id} returns the get_scoreboard function
+http://127.0.0.1:8000/scoreboard/games/add that route works with form inputs
+
+
+
+
