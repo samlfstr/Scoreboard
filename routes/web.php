@@ -20,4 +20,4 @@ Route::get('/', function () {
 
 Route::get('/scoreboard/games', [BoardController::class, 'get_games']);
 Route::get('/scoreboard/add', [BoardController::class, 'add_score']);
-Route::get('/scoreboard', [BoardController::class, 'get_scoreboard']);
+Route::get('/scoreboard/{game_id}', [BoardController::class, 'get_scoreboard']);
