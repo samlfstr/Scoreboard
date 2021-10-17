@@ -7,10 +7,10 @@ It has a 3 main function, and those can be easily accessed using routes.
 In this project I used postman as an API tester.
 
 ## Table of Contents
-* ###[Prerequisites](#Prerequisites)
-* ###[Installation](#Installation)
-* ###[Structure](#Structure)
-* ###[Tools For Testing](#Tools)
+* [Prerequisites](#Prerequisites)
+* [Installation](#Installation)
+* [Structure](#Structure)
+* [Tools For Testing](#Tools)
 
 ## Prerequisites
 <a name="prerequisites"></a>
