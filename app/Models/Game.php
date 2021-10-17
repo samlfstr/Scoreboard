@@ -13,4 +13,6 @@ class Game extends Model
     static function the_active_games(){
         return Game::all();
     }
+
+
 }

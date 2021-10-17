@@ -18,7 +18,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/scoreboard/games', [BoardController::class, 'active_games']);
-Route::get('/scoreboard/games/{id}', [BoardController::class, 'get_games']);
+Route::get('/scoreboard/games', [BoardController::class, 'get_games']);
 Route::get('/scoreboard/add', [BoardController::class, 'add_score']);
 Route::get('/scoreboard', [BoardController::class, 'get_scoreboard']);
