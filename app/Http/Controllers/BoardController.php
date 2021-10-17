@@ -7,13 +7,23 @@ use App\Models\User;
 use App\Models\Game;
 use App\Models\UserScore;
 
+/*
+- aktif oyunları
+- oyunları daha önce oynamış unique kullanıcı sayısı
+- toplam oynama sayısı döndürür
+*/
 class BoardController extends Controller
 {
-    function index(){
+    function get_games($id){
 
-        $user = User::game_ids(10);
+    }
 
-        return view('scoreboard')->with('users', $user);
+    function get_scoreboard(){
+
+    }
+
+    function add_score(){
+
     }
 
 

@@ -10,7 +10,9 @@ class User extends Model
     protected $table = "users";
     use HasFactory;
 
-    static function game_ids($val){
-        return User::query()->where('game_id_fk', '=', $val)->get();
+    static function the_game($game_id){
+       return User::all();
     }
+
 }
+
